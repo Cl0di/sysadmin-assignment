@@ -1,0 +1,29 @@
+# Privileges
+dn: ou=Privileges,dc=viodotcom,dc=com
+objectClass: organizationalUnit
+ou: Privileges
+
+# Privilege Groups
+dn: cn=Administrator,ou=Privileges,dc=viodotcom,dc=com
+objectClass: groupOfNames
+cn: Administrator
+member: cn=Charlie,ou=Platform,dc=viodotcom,dc=com
+member: cn=Carlos,ou=Foo,dc=viodotcom,dc=com
+member: cn=Adam,ou=Bar,dc=viodotcom,dc=com
+
+dn: cn=PowerUser,ou=Privileges,dc=viodotcom,dc=com
+objectClass: groupOfNames
+cn: PowerUser
+member: cn=Jessica,ou=Platform,dc=viodotcom,dc=com
+member: cn=Isla,ou=Foo,dc=viodotcom,dc=com
+member: cn=Nairobi,ou=Bar,dc=viodotcom,dc=com
+
+dn: cn=ReadOnly,ou=Privileges,dc=viodotcom,dc=com
+objectClass: groupOfNames
+cn: ReadOnly
+member: cn=David,ou=Platform,dc=viodotcom,dc=com
+member: cn=Christian,ou=Foo,dc=viodotcom,dc=com
+member: cn=Ben,ou=Bar,dc=viodotcom,dc=com
+member: cn=John,ou=Platform,dc=viodotcom,dc=com
+member: cn=Amanda,ou=Foo,dc=viodotcom,dc=com
+member: cn=Dora,ou=Bar,dc=viodotcom,dc=com

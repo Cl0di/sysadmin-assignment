@@ -1,0 +1,3 @@
+dn: ou=Foo,dc=viodotcom,dc=com
+objectClass: organizationalUnit
+ou: Foo

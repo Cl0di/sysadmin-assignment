@@ -1,0 +1,23 @@
+dn: cn=Charlie,ou=Platform,dc=viodotcom,dc=com
+objectClass: person
+cn: Charlie
+sn: (Last Name)
+title: Eng Manager
+
+dn: cn=Jessica,ou=Platform,dc=viodotcom,dc=com
+objectClass: person
+cn: Jessica
+sn: (Last Name)
+title: Tech Lead
+
+dn: cn=David,ou=Platform,dc=viodotcom,dc=com
+objectClass: person
+cn: David
+sn: (Last Name)
+title: Sr Engineer
+
+dn: cn=John,ou=Platform,dc=viodotcom,dc=com
+objectClass: person
+cn: John
+sn: (Last Name)
+title: Sr Engineer

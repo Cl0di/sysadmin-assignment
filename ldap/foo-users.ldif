@@ -1,0 +1,23 @@
+dn: cn=Carlos,ou=Foo,dc=viodotcom,dc=com
+objectClass: person
+cn: Carlos
+sn: (Last Name)
+title: Eng Manager
+
+dn: cn=Isla,ou=Foo,dc=viodotcom,dc=com
+objectClass: person
+cn: Isla
+sn: (Last Name)
+title: Product Manager
+
+dn: cn=Christian,ou=Foo,dc=viodotcom,dc=com
+objectClass: person
+cn: Christian
+sn: (Last Name)
+title: Tech Lead
+
+dn: cn=Amanda,ou=Foo,dc=viodotcom,dc=com
+objectClass: person
+cn: Amanda
+sn: (Last Name)
+title: Sr Engineer

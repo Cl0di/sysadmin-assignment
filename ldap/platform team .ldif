@@ -1,0 +1,3 @@
+dn: ou=Platform,dc=viodotcom,dc=com
+objectClass: organizationalUnit
+ou: Platform

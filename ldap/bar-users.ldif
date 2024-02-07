@@ -1,0 +1,23 @@
+dn: cn=Adam,ou=Bar,dc=viodotcom,dc=com
+objectClass: person
+cn: Adam
+sn: (Last Name)
+title: Eng Manager
+
+dn: cn=Nairobi,ou=Bar,dc=viodotcom,dc=com
+objectClass: person
+cn: Nairobi
+sn: (Last Name)
+title: Product Manager
+
+dn: cn=Ben,ou=Bar,dc=viodotcom,dc=com
+objectClass: person
+cn: Ben
+sn: (Last Name)
+title: Tech Lead
+
+dn: cn=Dora,ou=Bar,dc=viodotcom,dc=com
+objectClass: person
+cn: Dora
+sn: (Last Name)
+title: Sr Engineer

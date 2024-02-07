@@ -1,125 +1,77 @@
-# Vio.com System Administrator assignment
+# Vio.com LDAP Directory Structure
 
 ## Introduction
 
-This assignment is part of the recruitment process for the System Administrator at Vio.com. The purpose is to assess the technical skills of the candidates in a generic scenario.
+This document outlines the LDAP directory structure for Vio.com, designed to meet the organization's requirements for team management, role-based access control, and segregation of sensitive data.
 
-Please read carefully all the instructions before starting to work on your solution, and feel free to contact us if you have any doubts.
+## Directory Structure
 
-## Setup
+dc=viodotcom,dc=com
+|
+|-- ou=Teams
+| |
+| |-- ou=Platform
+| | |-- cn=Charlie (EM)
+| | |-- cn=Jessica (TL)
+| | |-- cn=David (Sr Engineer)
+| | |-- cn=Jhon (Sr Engineer)
+| |
+| |-- ou=Foo
+| | |-- cn=Carlos (EM)
+| | |-- cn=Isla (PM)
+| | |-- cn=Christian (TL)
+| | |-- cn=Amanda (Sr Engineer)
+| |
+| |-- ou=Bar
+| |-- cn=Adam (EM)
+| |-- cn=Nairobi (PM)
+| |-- cn=Ben (TL)
+| |-- cn=Dora (Sr Engineer)
+|
+|-- ou=Groups
+| |-- cn=Admins
+| |-- cn=PowerUsers
+| |-- cn=ReadOnly
+| |-- cn=SensitiveAccess
+| |-- cn=NonSensitiveAccess
+|
+|-- ou=Systems
+|-- ou=AWS
+| |-- cn=FooAWS
+| |-- cn=BarAWS
+|
+|-- ou=Datadog
+|-- cn=AdminAccess
+|-- cn=ReadWriteAccess
+|-- cn=ReadOnlyAccess
 
-*Note:* You need to fork this repository to work on your solution to the assignment.
+## Description
 
-The repository has the following content:
+- **Teams:** Organized under the `ou=Teams` branch, each team has its own organizational unit (OU) representing different departments within Vio.com.
+  
+- **Roles:** Each team consists of various roles such as Engineering Manager (EM), Tech Lead (TL), Product Manager (PM), and Senior Engineer (Sr Engineer).
 
-* A [Dockerfile](./Dockerfile) to build the docker image for the assignment.
-* A [Makefile](./Makefile) to be used to execute all the necessary steps of the assignment.
-* A [ldap](./ldap/) directory with an LDIF file to be used as a sample.
+- **Groups:** Security groups are organized under the `ou=Groups` branch, facilitating role-based access control (RBAC). Groups include Admins, PowerUsers, ReadOnly, SensitiveAccess, and NonSensitiveAccess.
 
-The `Dockerfile` is based on the OpenLDAP image, with all the necessary commands to be used during this exercise.
+- **Systems:** The `ou=Systems` branch encompasses different systems utilized by Vio.com. Sub-OUs represent systems such as AWS and Datadog, ensuring segregation and management of resources.
 
-There's also a `Makefile` for reference with a target that executes the two LDIF files as an example. We also have included an empty `run` target, which is the default one for the `make` utility.
+## Implementation
 
-### What we expect
+- LDIF files have been created to populate the LDAP tree with the defined structure.
+  
+- The Makefile includes targets for building Docker images, running LDAP setup, and creating LDIF files, ensuring streamlined implementation.
 
-We expect you to add more targets for all steps of your solution to trigger them in the correct order from the `run` target. It means that once executed, LDAP is configured in the right way.
+## Validation
 
-### How we will validate your solution
+- The LDAP setup can be tested by running a Docker container and verifying the LDAP tree's correctness.
+  
+- Ensure all requirements, including team structure, role-based access control, and system segregation, are met.
 
-To validate your solution we're going to:
+## Conclusion
 
-* Build the docker image
+The LDAP directory structure provides a robust foundation for managing teams, implementing role-based access control, and segregating sensitive data within Vio.com's infrastructure.
 
-```docker
-docker build -t viodotcom/assignment .
-```
+## References
 
-* Run the docker container to connect to the LDAP:
-
-```docker
-docker run -it --rm viodotcom/assignment
-```
-
-* Check the LDAP tree and the objects created after the execution of `make` utility:
-
-```docker
-ldapsearch -x -H ldap://localhost -b dc=viodotcom,dc=com -D "cn=admin,dc=viodotcom,dc=com" -w <passwd>
-```
-
-We'll also see if you created any extra files or edited the current one under the `ldap/` directory.
-
-## Assignment
-
-The objective of this assignment is to define and configure a structure for security groups in the Vio.com directory.
-Remember to create the objects necessary in a set of different LDIFs or inside a unique file, and to add them to the target of the `Makefile` since we want all objects created with the `make` utility.
-
-Feel free to create diagrams and a `README` to clarify and justify your decisions.
-
-### The problem
-
-Currently, we have our directory access configured in the SSO system, which gives us much less flexibility than the most used directory systems available on the market, forcing us to have a non-ideal segregation. So, we start to consider migrating to a different system, such as OpenLDAP.
-
-However, to decide if it's the right choice, we need to do a PoC and validate a possible setup for the new LDAP with a Directory Information Tree (DIT) that satisfies the following requirements:
-
-* **Team structure:** Inside each team we would have different roles such as Engineer Manager (EM), Tech Lead (TL), Product Manager (PM), and Engineers (IC).
-
-* **Privileges:** Depending on the system we may have different privileges for each role such as `Administrator`, `PowerUser`, `Read Only`.
-
-* **PII data:** At Vio.com we care about customer data, and every year we have a PCI DSS audit to review and to ensure that our systems are properly configured to handle sensitive information. So, we need a segregation of `sensitive` and `nonsensitive` systems where we can ensure that only the necessary employees have access there.
-
-### Current structure
-
-Currently, we have the following team structure:
-
-* **Platform team:** Inside the Engineering chapter, one of the duties of the platform team is to provide access across different systems to the Vio.com employees. Are part of the platform team the following users:
-  * Charlie: Eng Manager
-  * Jessica: Tech Lead
-  * David: Sr Engineer
-  * Jhon: Sr Engineer
-
-* **Foo team:** Inside the Engineering chapter, it's a frontend team responsible for the `Foo product`, they have to develop new features, promote it to production, maintain and troubleshoot the service. Are part of the platform team the following users:
-  * Carlos: Eng Manager
-  * Isla: Product Manager
-  * Christian: Tech Lead
-  * Amanda: Sr Engineer
-
-* **Bar team:** Inside the Engineering chapter, it's a frontend team responsible for the `Bar product`, they have to develop new features, promote it to production, maintain and troubleshoot the service.
-  * Adam: Eng Manager
-  * Nairobi: Product Manager
-  * Ben: Tech Lead
-  * Dora: Sr Engineer
-
-### The systems
-
-For this assignment let's consider the following systems:
-
-* **Cloud provider (AWS):** Each product has your own AWS account, so you can consider the following setup.
-
-```mermaid
-flowchart TD
-    MS0["viodotcom-master\n(root account)"]
-    DP0["viodotcom-foo\n(account)"]
-    DP1["viodotcom-bar\n(account)"]
-
-    MS0 --> DP0
-    MS0 --> DP1
-```
-
-* **Monitoring tool (Datadog):** Datadog provides all monitors, dashboards, logs and events inside the same instance for every team. Varying only if the user has `Admin`, `Read write` or `Read only` access.
-
-### Task 1
-
-Define the best approach to handle those requirements for the DIT, feel free to propose different groups, organization units (OU) or any other logic that you may have. The important thing here is that the approach satisfies the requirements and that the strategy is crystal clear.
-
-**Tip:** You can consider group people by product, by functional role (EM, TL), by privilege. Users could be part of one or more groups, if necessary.
-
-You can create a `README` explaining your decision, using [mermaid](https://github.com/mermaid-js/mermaid) as used before, or a simple draw outside of GitHub, as you prefer.
-
-### Task 2
-
-It's time to implement. So, you need to populate the LDAP tree (DIT) reflecting the idea shared on Task 1, creating all the objects as well as the users listed above.
-
-### References
-
-* [Structure of an LDAP directory tree](http://www.novell.com/documentation/opensuse110/opensuse110_reference/data/sec_ldap_tree.html)
-* [Simple LDAP DIT](https://www.zytrax.com/books/ldap/ch5/)
+- [Structure of an LDAP Directory Tree](http://www.novell.com/documentation/opensuse110/opensuse110_reference/data/sec_ldap_tree.html)
+- [Simple LDAP DIT](https://www.zytrax.com/books/ldap/ch5/)
