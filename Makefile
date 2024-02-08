@@ -26,6 +26,8 @@ create-platform-ldif:
 	echo "sn: (Last Name)" >> ldap/platform-users.ldif
 	echo "title: Eng Manager" >> ldap/platform-users.ldif
 
+	# Add LDIF files and commands for other users within the Platform team
+
 # Target to create LDIF files for the Foo team
 create-foo-ldif:
 	@echo "Creating LDIF files for the Foo team..."
@@ -40,6 +42,8 @@ create-foo-ldif:
 	echo "cn: Carlos" >> ldap/foo-users.ldif
 	echo "sn: (Last Name)" >> ldap/foo-users.ldif
 	echo "title: Eng Manager" >> ldap/foo-users.ldif
+
+	# Add LDIF files and commands for other users within the Foo team
 
 # Target to create LDIF files for the Bar team
 create-bar-ldif:
@@ -56,26 +60,7 @@ create-bar-ldif:
 	echo "sn: (Last Name)" >> ldap/bar-users.ldif
 	echo "title: Eng Manager" >> ldap/bar-users.ldif
 
-# Target to create LDIF files for all teams
-create-ldif-files: create-platform-ldif create-foo-ldif create-bar-ldif
+	# Add LDIF files and commands for other users within the Bar team
 
 # Target to run the assignment, ensuring LDAP setup and LDIF files are created first
-run-assignment: setup-ldap create-ldif-files
-	@echo "Running the assignment..."
-	docker run -it --rm viodotcom/assignment
-
-# Target to run tests for the assignment
-test:
-	@echo "Testing the assignment..."
-	# Add commands to test the assignment
-
-# Target to clean up any generated files or Docker containers/images
-clean:
-	@echo "Cleaning up..."
-	# Add commands to clean up any generated files or Docker containers/images
-
-
-# Target to clean up any generated files or Docker containers/images
-clean:
-    @echo "Cleaning up..."
-    # Add commands to clean up any generated files or Docker containers/images
+run-assignment: setup-ldap create
